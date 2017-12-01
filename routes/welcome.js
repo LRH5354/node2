@@ -6,6 +6,7 @@ var router = express.Router();
 
 /* GET welcome listing. */
 router.get('/', function(req, res, next) {
+    console.log(req)
     res.send('欢迎来到博客');
 });
 
