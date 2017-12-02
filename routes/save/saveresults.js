@@ -4,9 +4,10 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET welcome listing. */
+/* GET welcome page. */
 router.get('/', function(req, res, next) {
-    res.send('欢迎来到博客');
+    console.log(req.query)
+    res.render('index', { title: 'save' });;
 });
 
 module.exports = router;

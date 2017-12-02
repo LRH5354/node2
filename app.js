@@ -9,6 +9,9 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var welcome=require('./routes/welcome')
+var saveresults=require('./routes/save/saveresults');
+//var poi=require('./public/html/POI2.html')
+
 var app = express();
 
 // view engine setup
@@ -25,7 +28,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/welcome',welcome)
+app.use('/welcome',welcome);
+app.use('/save',saveresults);
+//app.use('/poi',poi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
