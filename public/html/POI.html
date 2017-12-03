@@ -1,0 +1,325 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+
+        #allmap {
+            width: 100%;
+            height: 500px;
+        }
+
+        p {
+            margin-left: 5px;
+            font-size: 14px;
+        }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Hmv50bRYfqK7lGvHQEk4bj4cI6nbdbGS"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+    <title>搜索区域内关键词</title>
+</head>
+<body>
+<div id="tips" style=" margin-left:10px; margin-top:5px;float:left">
+</div>
+<div id="allmap"></div>
+<p>设置密度，默认0.01(该功能有bug 切勿设置密度 轻则死机  重则重启)<input id="jibie" type="text" value=0.01><button id="shezhi">设置</button></p>
+<p> 点击开始查询 <button id="click">开始查找</button></p>
+<div id="log">
+    <div id="city"></div>
+    <div id="keyword"></div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+
+  var map;
+    var midu=0.01 ;
+    var kindex=0;
+    var cindex=0;
+    var index = 0;
+    var jindu =0;
+    var  BL=[];
+    var rs = {};
+    var local ;
+    var citys;
+    var keywords;
+    var options = {
+        onSearchComplete: function (results) {
+            if (local.getStatus() == BMAP_STATUS_SUCCESS) {
+//{#	           console.log(index, "成功-------------------------------------------------------------")#}
+//{#              // console.log(results)#}
+//{#	            console.log("总结果数：", results.getNumPois())#}
+//{#	            console.log("当前页结果数：", results.getCurrentNumPois())#}
+//{#	            console.log("当前页数：", results.getPageIndex())#}
+//{#	            console.log("总页数 ", results.getNumPages())#}
+//{#	            console.log("成功-------------------------------------------------------------")#}
+//{#	            index++;#}
+                var pp=0;
+                for (var i = 0; i < results.getCurrentNumPois() ; i++) {
+                    var str =results.getPoi(i).province+ ", "+ results.getPoi(i).city + ", " + results.getPoi(i).title + ", " + results.getPoi(i).point.lng + ", " +results.getPoi(i).point.lat+ ", " +results.getPoi(i).address + ", " + results.getPoi(i).phoneNumber+ ", " + results.getPoi(i).tags+ ", " + results.keyword;
+                    rs[i] = str;
+                }
+              //  console.log(rs)
+                // console.log(rs)
+                   var data={};
+                     data=rs;
+                     $.post("/testSave",
+                     data,
+                function(data,status){
+
+                });
+
+                if (results.getPageIndex() < results.getNumPages() - 1) {
+                    local.gotoPage(results.getPageIndex() + 1);
+                } else {
+                    jindu ++;
+                    if (jindu < BL.length) {
+
+                        local.searchInBounds(keywords[kindex], BL[jindu]);
+
+                        runTips(jindu);
+                    } else {
+                        jindu=0;
+                        kindex++;
+                        if(kindex<keywords.length) {
+
+                            local.searchInBounds(keywords[kindex], BL[jindu]);
+
+                            runTips(jindu);
+                        }else{
+                            jindu=0;
+                            kindex=0;
+                            cindex++;
+                            if(cindex<citys.length) {
+                                getBoundary(citys[cindex])
+                            }else {
+                                console.log("完成时间" , date.getHours()+date.getMinutes())
+                            }
+
+                        }
+
+                    }
+                }
+
+            } else {
+//{#	           console.log(index,"失败------------------------------------------------------------")#}
+//{#	           index++#}
+                jindu++;
+                if (jindu < BL.length) {
+                    local.searchInBounds(keywords[kindex], BL[jindu])
+                    runTips(jindu);
+                }else {
+                    jindu=0;
+                    kindex++;
+//{#                             console.log(keywords[kindex])#}
+                    if(kindex<keywords.length) {
+
+                        local.searchInBounds(keywords[kindex], BL[jindu]);
+
+                        runTips(jindu);
+                    }else{
+                        jindu=0;
+                        kindex=0;
+                        cindex++;
+                        if(cindex<citys.length) {
+                            getBoundary(citys[cindex])
+                        }else {
+//{#	                                 console.log("完成时间" , date.getHours()+date.getMinutes())#}
+
+                            console.log("完成")
+                            cindex=0;
+                            kindex=0;
+                        }
+
+                    }
+
+                }
+            }
+        }
+    };
+
+
+    //
+    //查找主体
+    //
+
+    //
+    //设置矩阵密度
+    //
+    $("#shezhi").on("click",function(){
+        var e=$("#jibie").val();
+        console.log(e)
+        midu=parseInt(e)
+        alert("密度已设为"+e)
+    })
+
+
+
+    function getbound(bound) {
+//{#        console.log()#}
+        var sw = bound.getSouthWest();
+        var ne = bound.getNorthEast();
+        var bounds = [];
+        for (var y = sw.lat; y < ne.lat; y += midu) {
+            for (var x = sw.lng; x < ne.lng; x += midu) {
+                bounds.push(new BMap.Bounds(new BMap.Point(x, y), new BMap.Point(x + midu , y + midu)));
+            }
+        }
+        return bounds;
+    }
+
+
+    //判断矩形是否在行政区内
+
+    function runTips(message) {
+        document.getElementById("tips").innerHTML=message+"/"+BL.length;
+    }
+
+    //
+    //串行执行控制函数
+    //
+    //{#	function series(item, num) //{#}
+    //{#	    if (item < BL.length) //{#}
+    //{#	        async(item, function () //{#}
+    //{#	            local.searchInBounds(keywords, BL[item])#}
+    //{#	            return series((item + 1), num);#}
+    //{#	        });#}
+    //{#	    } else //{#}
+    //{#	        return final();#}
+    //{#	    }#}
+    //{#	}#}
+    //{##}
+    //{#	//请求完成执行#}
+    //{#	function final() //{#}
+    //{#	   //console.log(s)#}
+    //{#	}#}
+    function  getparam(){
+        $.post("/getparam",
+            function(data){
+                var arr=data.split("/")
+                var arr1=arr[0].split(",")
+                var arr2=arr[1].split(",")
+                //console.log(arr1,arr2)
+                addchoose("city",arr1)
+                addchoose("keyword",arr2)
+                //console.log("Data: " , data );
+            });
+    }
+
+    //
+    //异步加载百度api
+    //
+
+
+    function initialize() {
+
+        map = new BMap.Map("allmap");            // 创建Map实例
+        map.centerAndZoom(new BMap.Point(112.968386, 22.52185), 11);
+        map.enableScrollWheelZoom();           //启用滚轮放大缩小
+    }
+
+    function loadScript() {
+        var script = document.createElement("script");
+        script.src = "http://api.map.baidu.com/api?v=1.2&callback=initialize";
+        document.body.appendChild(script);
+    }
+
+    window.onload = loadScript;
+    //异步函数
+    //{#	function async(arg, callback) //{#}
+    //{#	    document.getElementById("tips").innerHTML = "进度：" + arg + "/" + BL.length;#}
+    //{#	    var pStart = BL[arg].getSouthWest()#}
+    //{#	    var pEnd= BL[arg].getNorthEast()#}
+    //{#        var polygon = new BMap.Polygon([#}
+    //{#            new BMap.Point(pStart.lng, pStart.lat),#}
+    //{#            new BMap.Point(pEnd.lng, pStart.lat),#}
+    //{#            new BMap.Point(pEnd.lng, pEnd.lat),#}
+    //{#            new BMap.Point(pStart.lng, pEnd.lat)#}
+    //{#	            ], { strokeColor: "blue", strokeWeight: 6, strokeOpacity: 0.5 });#}
+    //{#	       map.addOverlay(polygon);#}
+    //{#	    setTimeout(function () { callback(arg); },10);#}
+    //{#	}#}
+
+
+    function addchoose(_id, _fieldchossed) {
+        for (var i = 0; i < _fieldchossed.length; i++) { $("#"+_id).append("<label><input type=\"checkbox\" name=\"choose\" value=" + _fieldchossed[i] + ">" + _fieldchossed[i] + "<a></a>") };
+    }
+    function querychoose(_id) {
+        var fieldchossed=[];
+        var $checkbox = $("#"+_id+" input[name=\"choose\"]:checked")
+        $checkbox.each(function () {
+            fieldchossed.push($(this).val())
+        })
+        return fieldchossed;
+    }
+
+    function getBoundary(name){
+        var bdary = new BMap.Boundary();
+//{#     var name = document.getElementById("districtName").value;#}
+        bdary.get(name, function(rs){       //获取行政区域
+//{#            map.clearOverlays();        //清除地图覆盖物       #}
+            var count = rs.boundaries.length; //行政区域的点有多少个
+            var bounds = [];//先清空region数组
+            for(var i = 0; i < count; i++){
+                var ply = new BMap.Polygon(rs.boundaries[i], {strokeWeight: 2, strokeColor: "#ff0000"}); //建立多边形覆盖物
+                bounds[i] = ply.getBounds();
+            }
+            var pStart=bounds[0].getSouthWest();
+            var pEnd=bounds[0].getNorthEast();
+            var polygon = new BMap.Polygon([
+                new BMap.Point(pStart.lng, pStart.lat),
+                new BMap.Point(pEnd.lng, pStart.lat),
+                new BMap.Point(pEnd.lng, pEnd.lat),
+                new BMap.Point(pStart.lng, pEnd.lat)
+            ], { strokeColor: "blue", strokeWeight: 6, strokeOpacity: 0.5 });
+            map.addOverlay(polygon);
+
+            BL = getbound(bounds[0]);
+            local = new BMap.LocalSearch(citys[cindex], options); //设置local的初始化设置
+            local.setPageCapacity(50);
+            local.setLocation(citys[cindex])
+            //console.log(BL.length);
+//{#                console.log(keywords)#}
+            local.searchInBounds(keywords[kindex], BL[jindu])
+            runTips(jindu);
+        });
+    }
+
+    $(document).ready(function () {
+        //  getparam();
+//        var data={0:"kfk",
+//        1:"我爱罗"
+//        };
+//
+//        $.post("/testSave",
+//            data,
+//            function(data,status){
+//
+//            });
+        $("#click").on("click", function () {
+
+            // var tempC=querychoose("city")
+            var tempC=["深圳市"]
+            citys=tempC
+
+            // var tempK=querychoose("keyword");
+            var tempK=["超市","餐饮","电影院"]
+//{#            series(0, BL.length)#}
+            keywords=tempK;
+            getBoundary(citys[cindex])
+
+        })
+    })
+
+
+
+
+</script>

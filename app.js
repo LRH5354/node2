@@ -5,14 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-
+//requre 请求相对路径
 var index = require('./routes/index');
 var users = require('./routes/users');
 var welcome=require('./routes/welcome')
 var saveresults=require('./routes/save/saveresults');
 //var poi=require('./public/html/POI2.html')
 
-var app = express();
+var app = express();//形成server服务器
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
