@@ -6,6 +6,7 @@ var router = express.Router();
 var fs=require('fs');
 function ShowServerStaticFile(res,path,contentType,responseCode){
     if(!responseCode) responseCode=200;
+
     fs.readFile(path,function(err,data){
         if(err) {
 
