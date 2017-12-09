@@ -12,11 +12,11 @@ var connection = mysql.createConnection({
 connection.connect();
 
 var  sql = 'SELECT * FROM student';
-var  addSql = 'INSERT INTO student(SNO,SNAME,SEX) VALUES(?,?,?)';
-var  addSqlParams = ['2015878', '朱丹','女'];
+var  addSql = 'INSERT INTO student(SNO,SNAME,SEX) VALUES ?';
+var  addSqlParams = [['2015878', '朱丹','女'],['2015878', '朱丹','女'],['2015878', '朱丹','女']];
 //插入记录
-for(var i=0;i<1000;i++){
-    connection.query(addSql,addSqlParams,function (err, result) {
+
+    connection.query(addSql,[addSqlParams],function (err, result) {
     if(err){
         console.log('[INSERT ERROR] - ',err.message);
         return;
@@ -25,7 +25,7 @@ for(var i=0;i<1000;i++){
     console.log('INSERT ID:',result);
     console.log('-----------------------------------------------------------------\n\n');
 });
-}
+
 
 //读取表内容
 

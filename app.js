@@ -10,7 +10,8 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var welcome=require('./routes/welcome')
 var saveresults=require('./routes/save/saveresults');
-//var poi=require('./public/html/POI2.html')
+var poi=require('./POI/fsPOI');
+var getbound=require('./routes/getbound');
 
 var app = express();//形成server服务器
 
@@ -30,8 +31,12 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/welcome',welcome);
 app.use('/save',saveresults);
-//app.use('/poi',poi);
+app.use('/poi',poi);
+app.use('/sendbound',getbound);
 
+
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
