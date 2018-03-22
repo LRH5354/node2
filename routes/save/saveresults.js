@@ -6,7 +6,7 @@ var router = express.Router();
 
 /* GET welcome page. */
 router.get('/', function(req, res, next) {
-    console.log(req.query)
+    console.trace(req.query)
     res.render('index', { title: 'save' });;
 });
 

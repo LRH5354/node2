@@ -6,19 +6,20 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "body-parser": "~1.18.2",
     "cheerio": "*",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "~4.15.5",
+    "iconv-lite": "^0.4.19",
     "morgan": "~1.9.0",
     "mysql": "^2.15.0",
+    "request": "^2.83.0",
     "serve-favicon": "~2.4.5",
     "shelljs": "^0.7.8",
     "swig": "^1.4.2",
-    "iconv-lite":"^0.4.19",
-    "request": "^2.83.0",
     "sync-request": "^4.1.0"
   }
 }

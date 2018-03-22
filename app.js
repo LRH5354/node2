@@ -8,12 +8,11 @@ var bodyParser = require('body-parser');
 //requre 请求相对路径
 var index = require('./routes/index');
 var users = require('./routes/users');
-var welcome=require('./routes/welcome')
 var saveresults=require('./routes/save/saveresults');
 var poi=require('./POI/fsPOI');
-var getbound=require('./routes/getbound');
-
-var app = express();//形成server服务器
+var pagechange=require('./routes/nextpage')
+var query=require('./routes/query')
+var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,10 +28,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/welcome',welcome);
+app.use('/more',pagechange);
+app.use('query/*',query);
 app.use('/save',saveresults);
 app.use('/poi',poi);
-app.use('/sendbound',getbound);
 
 
 app.use(bodyParser.json({limit: '50mb'}));
@@ -46,7 +45,7 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+  //set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
