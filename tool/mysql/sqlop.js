@@ -13,7 +13,6 @@ module.exports.query=function (sql,connection,callback) {
 
         console.log('--------------------------SELECT----------------------------');
         callback(err,result);
-        console.log(result[0]);
         console.log('------------------------------------------------------------\n\n');
         // connection.end();
     });

@@ -9,13 +9,15 @@ connection.connect();
 
 router.get('/', function(req, res, next) {
 
-        var sql='SELECT * FROM doubanmovie_info where id<=10'
+    var sql='SELECT  * FROM doubanmovie_info where id<=10'
     op.query(sql,connection,function (err,result) {
         if(err){
             console.log(err.message);
             res.render('index',{info:[]})
         }
+          console.log(result);
         res.render('index',{info:result})
+
     })
 
 });

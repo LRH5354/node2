@@ -11,7 +11,8 @@ var users = require('./routes/users');
 var saveresults=require('./routes/save/saveresults');
 var poi=require('./POI/fsPOI');
 var pagechange=require('./routes/nextpage')
-var query=require('./routes/query')
+var query=require('./routes/query');
+var click=require('./routes/click-movie')
 var app = express();
 
 // view engine setup
@@ -29,10 +30,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/more',pagechange);
-app.use('query/*',query);
+app.use('/query',query);
 app.use('/save',saveresults);
 app.use('/poi',poi);
-
+app.use('/click-m',click);
 
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));

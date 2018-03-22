@@ -1,12 +1,16 @@
 $(document).ready(function () {
    $.ajax({
-        url:'/more?start=1',
+        url:'/query?where=select count(id) as counts from doubanmovie_info ',
         type:'GET',
         success:function (result) {
-            console.log(result)
-        },
-        err:function () {
-            console.log("fail")
-        }
+        console.log(result)
+    },
+    err:function () {
+        console.log("fail")
+    }
+})
+
+    $('.pagination .page-item').on('click',function (param) {
+        console.log(this)
     })
 })
