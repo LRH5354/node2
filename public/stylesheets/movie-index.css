@@ -59,3 +59,23 @@ a:active{
     background:deepskyblue;
     color: white;
 }
+
+.list-so .container .row{
+    margin: 25px;
+    background: white;
+}
+
+.list-so .col-md-3,.list-so .col-md-8{
+    margin: 15px;
+}
+
+.list-so{
+    background: gainsboro;
+}
+.list-so img{
+    width: 100%;
+}
+body{
+    padding: 0px;
+}
+

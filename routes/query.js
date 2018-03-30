@@ -12,14 +12,15 @@ connection.connect();
 //测试查询全部条数
 router.get('/', function(req, res, next) {
     var sql=req.query.where;
- connection.query(sql,function (err,result) {
-     if(err){
-         console.log(err.message);
-         return ;
-         res.end(JSON.stringify({}))
-     }
-     res.end(JSON.stringify(result))
- })
+     connection.query(sql,function (err,result) {
+         if(err){
+             console.log(err.message);
+             return ;
+             res.end(JSON.stringify({}))
+         }
+
+         res.end(JSON.stringify(result))
+     })
 });
 
 module.exports = router;

@@ -29,15 +29,20 @@ router.get('/', function(req, res, next) {
         })
     }else{
         var count=req.query.start;
-        var sql="SELECT * FROM doubanmovie_info where id>="+(count-1)*10 + ' and id<='+(count*10);
+        var sql="SELECT * FROM doubanmovie_info limit "+(count-1)*10 + ' , '+10
+        ;
 
         op.query(sql,connection,function (err,result) {
+           var  temp={
+               type:'排行',
+               result:result
+           }
             if(err){
                 console.log(err.message);
                 res.render('index',{info:[]})
                 return;
             }
-            res.render('index',{info:result})
+            res.render('index',{info:temp})
         })
 
     }

@@ -28,21 +28,23 @@
            </div>
        </div>
        </div>
+
+      <!-- 导航框-->
        <div class="head-inner2">
        <div class="container">
            <!-- Nav pills -->
            <ul class="nav nav-pills" role="tablist">
                <li class="nav-item">
-                 <a class="text-white font-weight-bold nav-link active" data-toggle="pill" href="#list">首页</a>
+                 <a class="text-white font-weight-bold nav-link active"  href="/?type=首页">首页</a>
                </li>
                <li class="nav-item">
-                   <a class="text-white font-weight-bold nav-link" data-toggle="pill" href="#menu1">电影</a>
+                   <a class="text-white font-weight-bold nav-link "  href="/?type=电影">电影</a>
                </li>
                <li class="nav-item">
-                   <a class="text-white font-weight-bold nav-link" data-toggle="pill" href="#menu2">电视剧</a>
+                   <a class="text-white font-weight-bold nav-link" href="/?type=电视剧">电视剧</a>
                </li>
                <li class="nav-item">
-                   <a class="text-white font-weight-bold nav-link" data-toggle="pill" href="#menu3">动画</a>
+                   <a class="text-white font-weight-bold nav-link"  href="/?type=动画">动画</a>
                </li>
            </ul>
        </div>
@@ -63,21 +65,21 @@
               <!-- 轮播图片 -->
               <div class="carousel-inner">
                   <div class="carousel-item active">
-                      <img src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p1583261609.jpg">
+                      <img src="<%=info.result[2]._cover %>">
                       <!--<div class="carousel-caption">-->
                           <!--&lt;!&ndash;<h3>第一张图片描述标题</h3>&ndash;&gt;-->
                           <!--&lt;!&ndash;<p>这是一个小测试</p>&ndash;&gt;-->
                       <!--</div>-->
                   </div>
                   <div class="carousel-item">
-                      <img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p1097845082.jpg">
+                      <img src="<%=info.result[5]._cover %>">
                       <!--<div class="carousel-caption">-->
                           <!--&lt;!&ndash;<h3>第二张图片描述标题</h3>&ndash;&gt;-->
                           <!--&lt;!&ndash;<p>这是一个小测试!</p>&ndash;&gt;-->
                       <!--</div>-->
                   </div>
                   <div class="carousel-item">
-                      <img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p1833051594.jpg">
+                      <img src="<%=info.result[9]._cover%>">
                       <!--<div class="carousel-caption">-->
                           <!--&lt;!&ndash;<h3>第三张图片描述标题</h3>&ndash;&gt;-->
                           <!--&lt;!&ndash;<p>这是一个小测试!</p>&ndash;&gt;-->
@@ -100,82 +102,42 @@
 
   <div class="tab-content">
       <div id="list" class="container  tab-pane active"><br>
-          <h3>分数排行</h3>
+          <h2><%=info.type%></h2>
           <div class="container">
               <div class="text-center row">
                   <div class="col"><h3>片名</h3></div>
                   <div class="col"><h3>导演</h3></div>
                   <div class="col"><h3>主演</h3></div>
                   <div class="col"><h3>评分</h3></div>
+                  <div class="col"><h3>tags</h3></div>
               </div>
           </div>
               <ul class="list-group">
-                  <%for(var i=0;i<info.length;i++){ %>
+                  <%for(var i=0;i<info.result.length;i++){ %>
                  <li class="list-group-item list-group-item-light">
                       <div class="text-center row">
-                          <!--<div class="pic_cover"><img src="<%=info[i]._cover%>"> </div>-->
-                      <div class="col"><a target="_blank"  href="./click-m?title=<%=info[i]._title%>"><h5><%=info[i]._title%></h5></a></div>
-                      <div class="col"><h5><%=info[i]._director%></h5></div>
-                      <div class="col"><h5><%=info[i]._casts%></h5></div>
-                      <div class="col"><h5><%=info[i]._rate%></h5></div>
+                          <!--<div class="pic_cover"><img src="<%=info.result[i]._cover%>"> </div>-->
+                      <div class="col"><a target="_blank"  href="./click-m?title=<%=info.result[i]._title%>"><h5><%=info.result[i]._title%></h5></a></div>
+                      <div class="col"><h5><%=info.result[i]._director%></h5></div>
+                      <div class="col"><h5><%=info.result[i]._casts%></h5></div>
+                      <div class="col"><h5><%=info.result[i]._rate%></h5></div>
+                      <div class="col"><h5><%=info.result[i].tags%></h5></div>
                   </div>
                   </li>
                 <%}%>
               </ul>
       </div>
-      <div id="menu1" class="container tab-pane fade"><br>
-          <h3>电影</h3>
-          <ul class="list-group">
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-          </ul>
-      </div>
-      <div id="menu2" class="container tab-pane fade"><br>
-          <h3>电视剧</h3>
-          <ul class="list-group">
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-          </ul>
-      </div>
-      <div id="menu3" class="container tab-pane fade"><br>
-          <h3>动画</h3>
-          <ul class="list-group">
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-              <a href="#" > <li class="list-group-item list-group-item-light">成功列表项</li> </a>
-          </ul>
-      </div>
   </div>
   <div class="container more" >
-      <!--<button class="btn btn-light btn-block text-primary font-weight-bold">加载更多</button>-->
-      <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#">上一页</a></li>
-          <li class="page-item"><a class="page-link" href="/more?start=1">1</a></li>
-          <li class="page-item"><a class="page-link" href="/more?start=2">2</a></li>
-          <li class="page-item"><a class="page-link" href="/more?start=3">3</a></li>
-          <li class="page-item"><a class="page-link" href="/more?start=4">4</a></li>
-          <li class="page-item"><a class="page-link" href="/more?start=next">下一页</a></li>
-      </ul>
+      <button class="btn btn-light btn-block text-primary font-weight-bold next" tp="<%= info.type %>" start="10">加载更多</button>
+      <!--<ul class="pagination">-->
+          <!--<li class="page-item"><a class="page-link" href="#">上一页</a></li>-->
+          <!--<li class="page-item"><a class="page-link" href="/more?start=1">1</a></li>-->
+          <!--<li class="page-item"><a class="page-link" href="/more?start=2">2</a></li>-->
+          <!--<li class="page-item"><a class="page-link" href="/more?start=3">3</a></li>-->
+          <!--<li class="page-item"><a class="page-link" href="/more?start=4">4</a></li>-->
+          <!--<li class="page-item"><a class="page-link" href="/more?start=next">下一页</a></li>-->
+      <!--</ul>-->
   </div>
   <!--页脚-->
   <div class="container-fluid footer">

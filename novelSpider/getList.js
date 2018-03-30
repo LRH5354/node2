@@ -143,13 +143,4 @@ var syncrequest = require('sync-request');
 //getNovelUrl("大主宰");
 
 crawnovel(url);
-// crawnovel('https://www.xxbiquge.com/65_65378');
-// crawnovel('https://www.xxbiquge.com/77_77665');
-// crawnovel('https://www.xxbiquge.com/76_76187');
-// crawnovel('https://www.xxbiquge.com/0_494');
-// crawnovel('https://www.xxbiquge.com/65_65836');
-// crawnovel('https://www.xxbiquge.com/10_10156');
-// crawnovel('https://www.xxbiquge.com/0_576');
-// crawnovel('https://www.xxbiquge.com/66_66175');
-// crawnovel('https://www.xxbiquge.com/3_3519');
 

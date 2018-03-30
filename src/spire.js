@@ -22,6 +22,7 @@ var url =  "http://api.map.baidu.com/place/v2/search?query=美食&page_size=50&p
 
 function fetchPage(x) {
     startRequest(x);
+
 }
 
 function startRequest(x) {

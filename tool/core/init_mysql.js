@@ -1,3 +1,7 @@
+/**
+ * 根据传入的数据库名 初始化数据库连接 返回connection对象
+ */
+
 var mysql = require('mysql');
 var config=require('../config/sql.js');
 var connection;
