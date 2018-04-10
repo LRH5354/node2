@@ -27,21 +27,21 @@ temp.getmovie_url=function(url,callbck) {
                 var url='http://www.btbtdy.com/'+$(this).attr('href')
                 temp.push(url);
             })
-
-            async.mapLimit(temp,12,function(url,callback2) {
+          // 控制并发请求数量
+            async.mapLimit(temp,36,function(url,callback2) {
                 getmovie_info(url,callback2,callbck);
             },function (err,result) {
                 if(err){
                     console.log(err.message);
                     return ;
                 }
-                console.log(result);
-                connection.query(addSql,[result],function (err,result) {
+                //数据库插入操作
+                connection.query(addSql,[result],function (err,result2) {
                     if(err){
-                        console.log('插入数据库失败 :',err.message)
+                        console.log('插入数据库失败 :',err.message);
                         return;
                     }
-                    console.log('插入数据成功',result)
+                    console.log('插入数据成功',result2)
                 })
             })
 
@@ -56,9 +56,9 @@ temp.getmovie_url=function(url,callbck) {
  * @param url 基础url
  * @param num  返回url数组的长度
  */
-temp.create_su= function(url,num) {
+temp.create_su= function(url,start,num) {
     var temp=[];
-    for(var i=1;i<=num;i++){
+    for(var i=start;i<=(start+num-1);i++){
         temp.push(url+i+'.html')
     }
     return temp;
@@ -98,28 +98,35 @@ function getmovie_cili(url,movie_info,callback2,callback) {
     request(url,function (err,res,body) {
         if(err){
             console.log('请求磁力页面失败：',err.message);
-            console.log('--------重新请求磁力页面---------:',url)
+            console.log('重新请求磁力页面:',url)
             getmovie_cili(url,movie_info,callback2,callback)
         }else{
             var $=cheerio.load(body);
 
             var tag_ci=$('.d1');
-            //var tag_na= $('.bt').parents('a[title]');
-            var tag_na= $('.ico_1')
-            for(var i=0;i<tag_na.length;i++){
-                movie_cili[$(tag_na[i]).attr('title')]=$(tag_ci[i]).attr('href');
+            var tag_na= $('.bt').parents('a[title]');
+
+            if(tag_na.length===0){
+                movie_cili={'百度连接':null};
+                console.log(url+'不正常------解析完毕' )
+
+                if(movie_info.length==8){
+                    movie_info.push(null);
+                    movie_info.push(null)
+                }
+            }else{
+                for(var i=0;i<tag_na.length;i++){
+                    movie_cili[$(tag_na[i]).attr('title')]=$(tag_ci[i]).attr('href');
+                }
+                console.log(url+'解析完毕')
             }
+
             movie_info.push(JSON.stringify(movie_cili));
-
-            console.log(url+'解析完毕')
-
 
             if(count<=34){
                 console.log('----------------------------------------数目：',count);
-                // setTimeout(function () {
                 callback2(null,movie_info)
                 count++;
-                // },0)
             }else {
                 console.log('----------------------------------------数目：',count);
                 callback2(null,movie_info)

@@ -4,8 +4,9 @@ var async=require('async');
 var url2='http://www.btbtdy.com/screen/0-----hit-';
 var url3='http://www.btbtdy.com/btdy/dy11579.html';
 
-var list=DYTT.create_su(url2,2);
+var list=DYTT.create_su(url2,347,3);
 console.log(list)
+
 async.mapLimit(list,1,function (url,callback) {
 
     DYTT.getmovie_url(url,callback);
