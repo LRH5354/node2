@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="jsapi" type="javaScript">
+    <CLASSES />
+    <DOCUMENTATION>
+      <root url="https://maps.googleapis.com/maps/api/js" />
+    </DOCUMENTATION>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
