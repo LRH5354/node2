@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+    <title>Test Map</title>
+    <link rel="stylesheet" href="jsapi4.6/dijit/themes/claro/claro.css" />
+    <link rel="stylesheet" href="jsapi4.6/esri/css/main.css" />
+     <script src="jsapi4.6/dojo/dojo.js"></script>
+    <style>
+      html,
+      body,
+      #viewDiv {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+
+    <script>
+      var myMap, view;
+      require([
+        "esri/Basemap",
+        "esri/layers/TileLayer",
+        "esri/Map",
+        "esri/views/MapView",
+        "dojo/domReady!"
+      ], function (Basemap, TileLayer, Map, MapView){
+        // --------------------------------------------------------------------
+        // If you do not have public Internet access then use the Basemap class
+        // and point this URL to your own locally accessible cached service.
+        //
+        // Otherwise you can just use one of the named hosted ArcGIS services.
+        // https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer
+        // --------------------------------------------------------------------
+
+     var map = new Map({
+        basemap: "streets"
+      });
+
+      var view = new MapView({
+        container: "viewDiv",  // Reference to the scene div created in step 5
+        map: map,  // Reference to the map object created before the scene
+        zoom: 4,  // Sets the zoom level based on level of detail (LOD)
+        center: [15, 65]  // Sets the center point of view in lon/lat
+      });
+      });
+    </script>
+  </head>
+  <body class="claro">
+    <div id="viewDiv"></div>
+  </body>
+</html>
