@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<label>文件选择</label>
+<input type="file" id="fc"/>
+<div id="info"></div>
+</body>
+
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+$('#fc').on('change',function(e) {
+   var file=$('#fc')[0].files[0];
+
+   console.log($(file));
+  var reader=new FileReader();
+
+  //  console.log(reader.readAsBinaryString(file))
+   //   console.log(reader.readAsDataURL(file))
+     // console.log(reader.readAsText(file,'gbk'))
+   reader.onload=function(e) {
+     console.log(this.result)
+   }
+
+    reader.readAsArrayBuffer(file)
+
+
+})
+//console.log($('#fc')[0])
+</script>
+
+
+</html>

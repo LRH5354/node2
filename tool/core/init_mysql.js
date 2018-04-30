@@ -13,4 +13,12 @@ module.exports.createConnection=function (basename) {
         database : basename
     });
     return connection;
-}
+};
+
+module.exports.connect=function () {
+    connection.connect();
+};
+
+module.exports.connEnd=function () {
+    connection.end();
+};

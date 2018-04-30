@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var multipart = require('connect-multiparty');
+var busybody=require('connect-busboy')
 
 //requre 请求相对路径
 var index = require('./routes/index');
@@ -12,7 +14,8 @@ var saveresults=require('./routes/save/saveresults');
 var poi=require('./POI/fsPOI');
 var pagechange=require('./routes/nextpage')
 var query=require('./routes/query');
-var click=require('./routes/click-movie')
+var click=require('./routes/click-movie');
+var recievefile=require('./routes/recievefile')
 var app = express();
 
 // view engine setup
@@ -21,11 +24,15 @@ app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//app.use(busybody());
+
 app.use(logger('dev'));
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+//app.use(multipart());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.use('/', index);
 app.use('/users', users);
@@ -34,9 +41,9 @@ app.use('/query',query);
 app.use('/save',saveresults);
 app.use('/poi',poi);
 app.use('/click-m',click);
+app.use('/uploadfile',recievefile)
 
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

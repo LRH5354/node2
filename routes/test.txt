@@ -1,0 +1,80 @@
+test
+测试文件发生的纠纷苦上加苦放假啊睡觉的发链接束带结发；凯撒就发了看得见；建安费电费啊；是的放假啊是；大家弗兰克撒酒疯拉升阶段；疯狂举案说法商标标识V就是vs你的方式
+
+的方式的方式房间；aslk副书记的方式；的
+ormData 除了上面的创建新对象时直接将 form 作为参数传入外，还有其他的功能。网上大部分关于 FormData 介绍的文章都只提到了append()方法，那么FormData 对象到底有些什么方法呢？我们console 一下就知道：
+
+这里写图片描述
+
+console 之后我们有重大的发现，FormData 对象竟然有这么方法，所以还是自己测试才能发现真相，下面就对这些方法一一进行讲解：
+
+1、append()
+
+append()方法用于向 FormData 对象中添加键值对：
+
+fd.append('key1',"value1");
+fd.append('key2',"value2");
+1
+2
+fd是 FormData 对象，可以新建的空的对象，也可以是已经包含 form 表单或其他键值对。
+
+2、set()
+
+设置对应的键 key 对应的值 value(s)
+
+fd.set('key1',"value1");
+fd.set('key2',"value2");
+1
+2
+看起来跟append() 方法有点类似，这两者的区别就是，当指定的 key 值存在时，append()方法是将新增的添加的所以的键值对最后，而set()方法将会覆盖前面的设置的键值对。还是通过实例来对比，我们在前面的 form 的基础上 append() 或 set() 新的键值对：
+
+fd.append('name',"will");
+1
+有两个key为name的键值对： 
+这里写图片描述
+
+fd.set('name',"will");
+1
+只有一个key为name的键值对： 
+这里写图片描述
+
+以上就是 append() 和 set() 的区别。如果设置的key值不存在，那么两者的效果是一样的。
+
+3、delete()
+
+接收一个参数，表示你要删除的 key 值的名字，如果有多个相同 key 值，会一并删除：
+
+fd.append('name','will');
+fd.delete('name');
+1
+2
+form 中的 name 信息以及通过append() 新增的name 的信息都被删除了。
+
+4、get() 和 getAll()
+
+接收一个参数，表示需要查找的 key 的名称，返回第一个该 key 对应的 value 值。如果有多个相同的 key， 而且要返回所有的这个 key 对应的 value 值。
+
+同样以上面的 form 表单为基础：
+
+fd.append('name','will');
+console.log(fd.get('name')); // sean
+1
+2
+fd.append('name','will');
+console.log(fd.getAll('name')); // ["sean", "will"]
+1
+2
+5、has()
+
+该方法也接收一个参数，同样是 key 的名称，返回一个Boolean 值， 用来判断FormData 对象是否含有该 key。以上面的form为例：
+
+console.log(fd.has('name')); // true
+console.log(fd.has('Name')); // false
+1
+2
+6、keys()
+
+该方法不需要接收参数，返回一个迭代器，通过这个迭代器，我们可以遍历FormData 对象中所有的 key。以上面的form为例：
+
+for (var key of fd.keys()) {
+           console.log(key); 

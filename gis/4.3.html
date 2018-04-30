@@ -15,23 +15,34 @@
 <link rel="stylesheet" href="jsapi/dijit/themes/claro/claro.css" />
 <link rel="stylesheet" href="jsapi/esri/css/main.css">
 <script src="jsapi/init.js"></script>
-
 <script>
-require([
-  "esri/Map",
-  "esri/views/MapView",
-  "dojo/domReady!gis/4.3"
-], function(Map, MapView){
+
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "dojodefine/mydefine.js",
+      "dojodefine/defineclass.js",
+      "dojo/domReady!gis/4.3"
+    ], function(Map, MapView,mydefine,myclass){
   var map = new Map({
     basemap: "streets"
   });
 
   var view = new MapView({
-    container: "viewDiv",  // Reference to the scene div created in step 5
-    map: map,  // Reference to the map object created before the scene
-    zoom: 4,  // Sets the zoom level based on level of detail (LOD)
-    center: [15, 65]  // Sets the center point of view in lon/lat
+    container: "viewDiv",
+    map: map,
+    zoom: 4,
+    center: [15, 65]
   });
+var obj=new myclass('fdjf');
+   console.log(myclass)
+  console.log(obj.attr1)
+  console.log(obj.showattr())
+;
+
+
+
+
 });
 </script>
 </head>
