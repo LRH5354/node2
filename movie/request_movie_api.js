@@ -3,7 +3,7 @@ var insert=require('./sql_insert');
 var stringify=require('querystring');
 module.exports=function (url,callback) {
 
-    request(url,function (err,res,body) {
+    request(url,{},function (err,res,body) {
         if(err){
             console.log('错误出现！！')
             return ;

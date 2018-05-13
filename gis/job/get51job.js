@@ -7,7 +7,7 @@ var cheerio=require("cheerio");
 var iconv=require('iconv-lite');
 var async=require('async');
 
-
+var proxy='https://123.207.8.94:8080';
 var con_init=require('../../tool/core/init_mysql');
 
 var url1='https://search.51job.com/list/000000,000000,0000,00,9,99,GIS,2,';
@@ -50,9 +50,10 @@ var  addSql = 'INSERT INTO gis_job(gcname,lat,lng,address,city,jobid,jobname,gon
 
 function getlist(url,callback) {
     //请求每页列表的工作
-    request(url,{encoding : null},function (err,res,body){
+    request(url,{encoding : null ,proxy:proxy,rejectUnauthorized:false},function (err,res,body){
         if(err){
-            console.error(err.message)  ;
+            console.error(err.message);
+            console.log('fdskfsdhlfh')
             return ;
         }
         var $=cheerio.load(iconv.decode(body, 'gb2312'));
@@ -60,7 +61,8 @@ function getlist(url,callback) {
         var listId=$('input[name=\'jobid_list\']')[0].attribs.value.split('~');
          //删除多余id
          listId.splice(49,150);
-       //   console.log(listId)
+         console.log(listId)
+
         var list=creatlist('listdetial',null,listId);
 
          async.mapLimit(list,50,function (url,callback2) {
@@ -90,7 +92,13 @@ function getlist(url,callback) {
 
 function getdetail(url,callback,callback2) {
 //请求每个工作的详情
-    request(url,{encoding:null},function (err,res,body) {
+//     var opt = {
+//         method: 'GET',
+//         url: url,
+//         proxy:'http://151.106.25.230:1080',
+//         encoding: null,
+//     };
+    request(url,{encoding:null ,proxy:proxy,rejectUnauthorized:false},function (err,res,body) {
         if(err){
             console.log(err.message)  
             return ;
@@ -108,7 +116,13 @@ function getdetail(url,callback,callback2) {
 
 //获取每个工作的地址等信息
 function getlocation(url,opts,callback,callback2) {
-    request(url,{encoding : null},function (err,res,body) {
+    // var opt = {
+    //     method: 'GET',
+    //     url: url,
+    //     proxy:'http://151.106.25.230:1080',
+    //     encoding: null,
+    // };
+    request(url,{encoding : null ,proxy:proxy,rejectUnauthorized:false},function (err,res,body) {
         if(err){
             console.log(err.message)  ;
             return ;
