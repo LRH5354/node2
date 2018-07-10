@@ -2,28 +2,134 @@
  *作者  15879 -  LRH
  *创建时间 2018  2018/4/30  15:01
  **/
-/*
 
-函数
- 函数也是对象的一种 是比较特殊的一种（存在一个被称为[[Call]]的内部属性）
+ // 万物皆对象
+ 
+/*
+ 函数章节概述
+ 一 什么是函数
+ 1 函数就是可以执行的代码块 
+   这个比较好理解 就是在一个大括弧里定义一段代码，封装了一系列逻辑操作，
+   然后输入参数 调用函数（代码块） 返回处理结果 函数都是这么一个结果。
+
+ 2 函数可以通过函数声明和表达式两种定义方式
+   这两种函数表示方法看起来差不多 但是是有一点差别的，函数声明会被提升到是上下文的顶部,上下文是什么东西：要么是该函数被声明是所处的函数的范围，要么是
+   全局范围的
+   
+ 3 函数就是一个值
+   这就是一个js区别于其他语言的一个很有意思的一个特性 
+   首先我们知道函数也是一个对象，你可以像使用对象一样使用函数，
+   可以把函数当成变量赋值， 甚至可以把其当成参数传递给别的函数或许作为函数的返回值 基本上可以使用引用值的地方都可以使用函数，
+   这意味着函数威力无穷 灵活多变 但是 我们了解函数即对象之后 它的很多特性就很容易解释得通。
+ 二 怎么调用函数
+ 1 仅仅作为函数调用（待会解释）
+ 2 作为对象的属性调用
+ 3 call apply方法调用
  */
 
-var obj={
-    name:'lirunhua'
-};
-var myFunction=function (a,v,d) {
-    this.name=a;
-    this.type
+// var obj={
+
+
+// }
+// function myfunction (arg) {
+// 	console.log(arg+'函数声明') ;
+// }
+
+// var myfunction2=myfunction;
+
+// myfunction2('test')
+
+// function myfunction (arg) {
+// 	console.log(arg+'函数声明2') ;
+// }
+
+// myfunction2('test')
+/*
+ 在js里面 函数和其他语言里的定义差不多，毕竟js创建只花了十几天，作者肯定借鉴很多语言的精华部分，但是js里面的函数
+ 又有自身比较有意思的特性
+ 函数也是对象的一种 是比较特殊的一种（存在一个被称为[[Call]]的内部属性 这个属性保存我们写的可执行代码）
+ */
+
+/*
+
+ 万物皆对象
+ 
+ 函数章节概述
+ 一 什么是函数
+ 1 函数就是可以执行的代码块 
+   这个比较好理解 就是在一个大括弧里定义一段代码，封装了一系列逻辑操作，
+   然后输入参数 调用函数（代码块） 返回处理结果 函数都是这么一个结果。
+
+ 2 函数可以通过函数声明和表达式两种定义方式
+   这两种函数表示方法看起来差不多 但是是有一点差别的，函数声明会被提升到是上下文的顶部,上下文是什么东西：要么是       该函数被声明是所处的函数的范围，要么是全局范围的  这是可见性的问题后面的的文章可能会详细介绍
+   
+function myfunction (arg) {
+	return arg+'函数声明';
+}
+var  myfunction = function(arg) {
+	return arg+'函数表达式';
 }
 
-// console.log(obj);
-// console.log(myFunction)
-// console.log(Function)
-obj['[[Call]]']=undefined
+例子：
 
-myFunction.prototype.add='fdfdf';
+function myfunction (arg) {
+	console.log(arg+'函数声明') ;
+}
 
-test=new myFunction('dfs');
+var myfunction2=myfunction;
+
+myfunction2('test')
+
+function myfunction (arg) {
+	console.log(arg+'函数声明2') ;
+}
+
+myfunction2('test')
+
+ 你觉得两次运行下面的函数会有什么结果
+ myfunction2('test')   
+结果：
+
+test函数声明2   
+
+解释：这看出来js引擎对函数声明并不是一边运行，一边解析的 而是同意将函数声明的函数提升到上下文的顶部（相当于在先在顶部定义了myfunction函数 但由于我定义两次 所以后者把前者覆盖了。）至于为什么重新定义myfunction函数会影响到myfunction2呢 ，因为myfunction2=myfunction这句话只是将myfunction函数的引用赋值而已 ，myfunction2这个引用最后也是指向的值还是myfunction函数，所以myfunction函数改变 ，myfunction2指向的内容自然改变。
+
+test函数声明2
+
+解释：这个不用解释
 
 
 
+3 函数就是一个值
+
+   这就是一个js区别于其他语言的一个很有意思的一个特性 
+   首先我们知道函数也是一个对象，你可以像使用对象一样使用函数，
+   可以把函数当成变量赋值， 甚至可以把其当成参数传递给别的函数或许作为函数的返回值 基本上可以使用引用值的地方都      可以使用函数，
+   这意味着函数威力无穷 灵活多变 但是 我们了解函数即对象之后 它的很多特性就很容易解释得通。
+ 二 怎么调用函数
+ 1 仅仅作为函数调用（待会解释）
+ 2 作为对象的属性调用
+ 3 call apply方法调用
+
+
+
+
+ */
+
+
+var obj={
+   name:'djfk',
+   callname:myfunc
+}  
+
+
+
+
+obj.callname()
+
+function myfunc(a){
+   console.log(this)
+   console.log(a)
+}
+
+myfunc.call(obj,'dfd')

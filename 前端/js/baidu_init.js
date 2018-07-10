@@ -1,4 +1,4 @@
-	             
+
 	var map = new BMap.Map("map");           										 // 创建Map实例
 	map.centerAndZoom(new BMap.Point(113.273279,23.186874),8);  					 //初始化时，即可设置中心点和地图缩放级别。
 	map.enableDragging(true);               								 	 //禁止拖拽

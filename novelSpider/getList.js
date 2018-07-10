@@ -3,14 +3,15 @@
  */
 var fs=require('fs');
 var cheerio=require('cheerio');
+var async=require('async');
 var iconv= require('iconv-lite');
-var url='https://www.xxbiquge.com/10_10929';
+var url='https://www.xxbiquge.com/70_70685/';
 var request=require('request');
 var syncrequest = require('sync-request');
 
   function crawnovel(_url){
     var index=1;
-  console.log("hdjfhjs")
+
     getHtmlByUrl(_url);
 
     function getHtmlByUrl(href) {
@@ -36,11 +37,7 @@ var syncrequest = require('sync-request');
                     link.link=href+"/"+temp[2];
                     links.push(link);
                 })
-                // fs.writeFile(links[0].书名+" "+links[0].作者+"-list.json",JSON.stringify(links),function(err){
-                //     if(!err){
-                //         console.log("写入章节网址成功！！")
-                //     }
-                // })
+
                 getContent(links[index],links);
 
             } else {
@@ -91,12 +88,12 @@ var syncrequest = require('sync-request');
             console.log(info)
             console.log(info[0]+" 解析中.....")
             var content=$("#content").text().replace(/\&nbsp;/g, '').split('    ');
-
+       
             if(fs.existsSync(info[1]+".txt")){
-                fs.appendFileSync(info[1]+".txt"," ### "+ info[0]+"\r\n\r\n");
+                fs.appendFileSync(info[1]+".txt"," ### "+ info[0]+"\r\n");
 
                 for(var i=0;i<content.length;i++){
-                    fs.appendFileSync(info[1]+".txt","  "+content[i]+"\r\n");
+                    fs.appendFileSync(info[1]+".txt","      "+content[i]+"\r\n\r\n");
                 }
                 console.log(info[1]+" 章节写入txt完成");
                 fs.appendFileSync(info[1]+".txt","\r\n\r\n");
@@ -107,7 +104,7 @@ var syncrequest = require('sync-request');
             }else {
                 fs.writeFileSync(info[1]+".txt"," ### "+info[0]+"\r\n\r\n");
                 for(var i=0;i<content.length;i++){
-                    fs.appendFileSync(info[1]+".txt","  "+content[i]+"\r\n");
+                    fs.appendFileSync(info[1]+".txt","      "+content[i]+"\r\n\r\n");
                 }
                 console.log(info[1]+" 章节写入txt完成");
                 fs.appendFileSync(info[1]+".txt","\r\n\r\n");
