@@ -8,10 +8,6 @@ var querydb_cb=require('./cb/querydb')
 
 router.get('/querydb', function(req, res, next) {
      querydb_cb(req,res);
-}).get('/1', function(req, res, next) {
-    res.end('/1');
-}).get('/2', function(req, res, next) {
-    res.end('/0');
-});
+})
 
 module.exports = router;

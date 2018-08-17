@@ -5,7 +5,7 @@ var fs=require('fs');
 var cheerio=require('cheerio');
 var async=require('async');
 var iconv= require('iconv-lite');
-var url='https://www.xxbiquge.com/70_70685/';
+var url='https://www.biquge.info/24_24875/';
 var request=require('request');
 var syncrequest = require('sync-request');
 
@@ -45,14 +45,13 @@ var syncrequest = require('sync-request');
             }
         });
     }
-//
+
 //根据链接请求每页的html
-//
     var count=0;
     function getContent(chapter,links){
         var temp=links;
         console.log(chapter.title+" 正在请求.......");
-        //   var html= syncrequest('get',chapter.link).getBody().toString();
+
         request(chapter.link, function(err, response, body) {
             if(err){
                 count++;
@@ -73,6 +72,7 @@ var syncrequest = require('sync-request');
     }
 
 //解析请求到的章节html成文本 写入txt文件
+//
     function getToc(html,links){
         var temp=links;
         if(html===undefined){
